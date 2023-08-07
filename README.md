@@ -17,4 +17,4 @@ In order to run just launch the AHK file.
 
 ## Screenshot
 
-![screenshot](https://raw.githubusercontent.com/LatinSuD/AlexTaskbar/main/alextaskbar-screenshot1.png)
+![screenshot](https://raw.githubusercontent.com/LatinSuD/AlexTaskbar/main/alextaskbar-screenshot-1.png)
