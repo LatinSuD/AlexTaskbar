@@ -394,6 +394,7 @@ return
 
 
 ; To replace cursor while drag&dropping
+;    original source: https://www.autohotkey.com/boards/viewtopic.php?p=496913#p496913
 ReplaceSystemCursor(old := "", new := "")
 {
    static IMAGE_CURSOR := 2, SPI_SETCURSORS := 0x57
@@ -418,6 +419,7 @@ ReplaceSystemCursor(old := "", new := "")
 
 
 ; extract the icon from an active window
+;   original source: https://www.reddit.com/r/AutoHotkey/comments/ejm86o/comment/fcz4xsq/?utm_source=reddit&utm_medium=web2x&context=3
 getIconFromWindow(windowDef) {
 	WM_GETICON := 0x007F
 	ICON_SMALL := 0
