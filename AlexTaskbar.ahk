@@ -3,7 +3,7 @@
 #Persistent
 
 ; AlexTaskbar v1.0
-;   Github... 
+;   https://github.com/LatinSuD/AlexTaskbar/
 
 ; Set the width of the taskbar
 TaskbarWidth := 200
