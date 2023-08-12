@@ -115,20 +115,24 @@ UpdateTaskbar:
         id := idList%A_Index%
 		;OutputDebug, id %id%
 
-		; No listarnos a nosotros mismos
+		; skip ourselves
 		if ( id == myHWND ) {
 			Continue
+		}
+
+	        ; Ignore "tool" windows
+		WinGet, wStyle, ExStyle, ahk_id %id%
+		If (wStyle & 0x80) {
+		   Continue
 		}
 
 		if (ObjRawGet(DictLastSeen, id) == "")
 			isNewWindow=1
 		else
 			isNewWindow=0
-		
-        WinGetTitle, title, ahk_id %id%
-        ;WinGet, processName, ProcessName, ahk_id %id%
-
-		
+ 		
+                WinGetTitle, title, ahk_id %id%
+               ;WinGet, processName, ProcessName, ahk_id %id%
 		if ( title == "" ) {
 			Continue
 		} else {
