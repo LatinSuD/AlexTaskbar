@@ -11,7 +11,7 @@ This taskbar has these features:
 Some of these feature were available with 7+ Taskbar Tweaker app, but it is not compatible with Windows 11 anymore.
 
 ## Installation
-1. Instsall Autohotkey 1.1
+1. Install Autohotkey 1.1
 2. Download the AHK script
 
 In order to run just launch the AHK file.
