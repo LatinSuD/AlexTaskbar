@@ -2,7 +2,7 @@
 #SingleInstance force
 #Persistent
 
-; AlexTaskbar v1.0
+; AlexTaskbar v1.0.2
 ;   https://github.com/LatinSuD/AlexTaskbar/
 
 ; Set the width of the taskbar
@@ -14,9 +14,14 @@ useClock=1
 ; calendar application (when double click on clock)
 calendarApp = outlookcal:
 
+; show delay (in 100ms ticks)
+showDelay := 1
 
-
-
+; TODO: Seccion known bugs (iconos de "Fotos" no sale, icono de apps de otros no salen, salen apps que no deberian salir)
+; TODO: restaurar ventanas con sendmessage (winrestore no siempre funcioan)
+; TODO: Arreglar URL Github
+; TODO: coger icono del EXE si no se puede de la app
+; TODO: Drag Drop en tiempo real as opposed to ahora que no es intuitivo
 ; TODO: Prevent listing of hidden apps like "program manager"
 ; TODO: Delay when opening
 ; TODO: right click: open real menu (shift modifies?), close, max/minimize, insert separator, delete separator, change title, change icon
@@ -32,6 +37,7 @@ DictImg := []       ; icons of windows
 DictTitles := []    ; titles of windows
 DictLastSeen := []  ; to keep track of terminated windows
 
+showDelayCounter := 0
 
 if ( useClock )
 	clockPosition := A_ScreenHeight - 20
@@ -119,10 +125,10 @@ UpdateTaskbar:
 		if ( id == myHWND ) {
 			Continue
 		}
-
-	        ; Ignore "tool" windows
+	        
 		WinGet, wStyle, ExStyle, ahk_id %id%
 		If (wStyle & 0x80) {
+			; Ignore "tool" windows
 		   Continue
 		}
 
@@ -186,7 +192,7 @@ UpdateTaskbar:
 				LV_GetText(aId, A_Index, 4)
 				if ( id == aId ) { 
 					;OutputDebug, Seleccionando %id%
-					LV_Modify(A_Index, "Icon" . IndiceImg)
+					LV_Modify(A_Index, "Icon" . IndiceImg, , , IndiceImg)
 				}
 			}
 			
@@ -296,6 +302,7 @@ MyClick:
 			WaitClick := False
 			LV_Delete(CutItem)
 			LV_Insert(A_EventInfo, "Icon" . HoldText3, , HoldText2, HoldText3, HoldText4 )
+			GoSub, UpdateTaskbar
 		} Else {
 			; Really normal click
 
@@ -369,11 +376,16 @@ PeriodicTimer:
 
  ; if have to show
  if ( x < 2 && showState==0 ) {
-   GoSub,UpdateTaskbar
+   if ( showDelayCounter > showDelay ) {
+     GoSub,UpdateTaskbar
+   } else {
+     showDelayCounter := showDelayCounter + 1
+   }
  } else {
    ; if have to hide
    if ( x >= TaskbarWidth && showState == 1 ) {
 	showState=0
+	showDelayCounter=0	
 	OutputDebug,HIDE
 	Gui, Hide
    }
